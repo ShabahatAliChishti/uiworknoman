@@ -153,6 +153,7 @@ namespace WebBasedSystem.Controllers
             //  var submenu=model.waypoints.Id
             //var specialistmodel=db.Specialists.Where(x=>x.)
             //
+
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
