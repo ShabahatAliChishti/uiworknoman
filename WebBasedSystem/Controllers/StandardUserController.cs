@@ -12,6 +12,9 @@ namespace WebBasedSystem.Controllers
     public class StandardUserController : Controller
     {
         // GET: StandardUser
+        /// <summary>
+        //
+        /// </summary>
         WebBaseSystemEntities db = new WebBaseSystemEntities();
         public ActionResult Dashboard()
         {
