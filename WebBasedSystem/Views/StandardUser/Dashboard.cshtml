@@ -52,11 +52,22 @@
                                 <thead>
                                     <tr style="background-color:lightskyblue;">
                                         @*<th style="color:white;">Specialist Type</th>*@
-                                        <th style="color:white;">SubMenu</th>
-                                        <th style="color:white;">Specialist Name</th>
-                                        <th style="color:white;">Suburbs</th>
+                                        <th style="color:white;">Title</th>
+                                        <th style="color:white;">First Name</th>
+                                        <th style="color:white;">SurName</th>
+                                        <th style="color:white;">Address</th>
+                                        <th style="color:white;">Mobile Number</th>
+                                        <th style="color:white;">Phone Number</th>
+                                        <th style="color:white;">Email</th>
                                         <th style="color:white;">State</th>
-                                        <th style="color:white;">Post Code</th>
+                                        <th style="color:white;">TakingNewPatients</th>
+                                        <th style="color:white;">IsBooking</th>
+                                        <th style="color:white;">Waiting_Time</th>
+                                        <th style="color:white;">price</th>
+                                        <th style="color:white;">SubUrbs</th>
+                                        <th style="color:white;">View Location</th>
+
+
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -138,7 +149,7 @@
 
         document.getElementById("PostCode").disabled = true;
 
-    
+
         $("#SpecialistTypeId").change(function () {
             $.get("/Admin/GetMenuList", { SpecialistTypeId: $("#SpecialistTypeId").val() }, function (data) {
                 $("#SubMenuId").empty();
@@ -167,7 +178,7 @@
             });
     });
 
-    
+
     $("#SuburbsId").change(function () {
         $.get("/StandardUser/GetPostCode", { SuburbsId: $('#SuburbsId :selected').text() }, function (data) {
             console.log(data);
@@ -182,7 +193,7 @@
         });
 
     });
-    
+
 
 
 
@@ -211,11 +222,40 @@
                 //Append each row to html table
                 for (var i = 0; i < json.length; i++) {
                     tr = $('<tr/>');
+                    tr.append("<td>" + json[i].Title + "</td>");
                     tr.append("<td>" + json[i].SpecialistName + "</td>");
+                    tr.append("<td>" + json[i].Surname + "</td>");
+                    tr.append("<td>" + json[i].Address1 + "</td>");
+                    tr.append("<td>" + json[i].MobileNo + "</td>");
+                    tr.append("<td>" + json[i].PhoneNo + "</td>");
+                    tr.append("<td>" + json[i].EmailAddress + "</td>");
                     tr.append("<td>" + json[i].State + "</td>");
-                    tr.append("<td>" + json[i].SubMenu + "</td>");
+                    if (json[i].TakingNewPatients == true) {
+                        tr.append("<td>" + "<p>Yes</p>" + "</td>");
+                    }
+                    else
+                    {
+                        tr.append("<td>" + "<p>No</p>" + "</td>");
+
+                    }
+                    if (json[i].IsBooking == true) {
+                        tr.append("<td>" + "<p>Yes</p>" + "</td>");
+                    }
+                    else {
+                        tr.append("<td>" + "<p>No</p>" + "</td>");
+
+                    }
+
+                    tr.append("<td>" + json[i].Waiting_Time + "</td>");
+                    tr.append("<td>" + json[i].price + "</td>");
                     tr.append("<td>" + json[i].Suburbs + "</td>");
-                    tr.append("<td>" + json[i].PostCode + "</td>");
+                    @*tr.append("<td> onclick='window.location.href=\"https://www.google.com/maps/search/?api=1&query='@ViewBag.latitud ,@ViewBag.longitue'"+ "</td>");*@
+                    $('<td>').append('<a href="https://www.google.com/maps/search/?api=1&query='@ViewBag.latitud ,@ViewBag.longitue'"'  </a> + "</td>"');
+
+
+
+
+
 
                     $('#myTable').append(tr);
                 }
@@ -228,6 +268,6 @@
     }
 
     );
-    
-   
+
+
 </script>

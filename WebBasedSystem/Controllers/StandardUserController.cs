@@ -134,29 +134,31 @@ namespace WebBasedSystem.Controllers
             List<Specialist> data = new List<Specialist>();
 
             
-            List<Specialist> specialistfirstlist = db.Specialists.Where(x => x.SubMenu == submenufind.SubMenuName && x.PostCode == waypointsfind.PostCode && x.State == waypointsfind.State && x.Suburbs == waypointsfind.Suburbs).ToList().Select(x => new Specialist() { State=x.State,PostCode = x.PostCode, SpecialistName = x.SpecialistName, SubMenu = x.SubMenu, Suburbs = x.Suburbs }).ToList(); 
+            List<Specialist> specialistfirstlist = db.Specialists.Where(x => x.SubMenu == submenufind.SubMenuName && x.PostCode == waypointsfind.PostCode && x.State == waypointsfind.State && x.Suburbs == waypointsfind.Suburbs).ToList().Select(x => new Specialist() { Title = x.Title, SpecialistName = x.SpecialistName, Surname = x.Surname, Address1 = x.Address1 + x.Address2, MobileNo = x.MobileNo, PhoneNo = x.PhoneNo, EmailAddress = x.EmailAddress, State = x.State, TakingNewPatients = x.TakingNewPatients, IsBooking = x.IsBooking, Waiting_Time = x.Waiting_Time, price = x.price, Suburbs = x.Suburbs }).ToList(); 
 
             if (specialistfirstlist!=null)
             {
                 data=specialistfirstlist;
+                ViewBag.latitude = waypointsfind.Latitude;
+                ViewBag.longitue = waypointsfind.Longitude;
             }
             else
             {
 
                 DbHandleWayPoints dvp = new DbHandleWayPoints();
                 WayPoint wp = dvp.GetNearestWayPoint(waypointsfind.Latitude, waypointsfind.Longitude);
-                List<Specialist> specialistsecondtlist = db.Specialists.Where(x => x.SubMenu == submenufind.SubMenuName && x.PostCode == wp.PostCode && x.State == wp.State && x.Suburbs == wp.Suburbs).ToList()
-                  .Select(x => new Specialist() {State=x.State, PostCode = x.PostCode, SpecialistName = x.SpecialistName,SubMenu=x.SubMenu,Suburbs=x.Suburbs }).ToList();
+                List<Specialist> specialistsecondtlist = db.Specialists.Where(x => x.SubMenu == submenufind.SubMenuName && x.PostCode == wp.PostCode && x.State == wp.State && x.Suburbs == wp.Suburbs).ToList() .Select(x => new Specialist() {Title=x.Title, SpecialistName=x.SpecialistName,Surname=x.Surname,Address1=x.Address1+x.Address2,MobileNo=x.MobileNo,PhoneNo=x.PhoneNo, EmailAddress = x.EmailAddress,State=x.State, TakingNewPatients=x.TakingNewPatients,IsBooking=x.IsBooking,Waiting_Time=x.Waiting_Time,price=x.price,Suburbs=x.Suburbs }).ToList();
 
                 data = specialistsecondtlist;
-
+                ViewBag.latitude = wp.Latitude;
+                ViewBag.longitue = wp.Longitude;
             }
             //
 //
             //  var submenu=model.waypoints.Id
             //var specialistmodel=db.Specialists.Where(x=>x.)
             //
-
+          
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
